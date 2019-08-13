@@ -12,4 +12,5 @@ public class User {
     private String middleName;
     private String email;
     private String phoneNumber;
+    private String geofenceId;
 }

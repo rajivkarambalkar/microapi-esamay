@@ -2,6 +2,7 @@ package com.esamay.controller;
 
 import com.esamay.domain.User;
 import com.esamay.service.UserServiceBoundary;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public class UserController {
 
     private final UserServiceBoundary userServiceApp;
 
+    @Autowired
     public UserController(UserServiceBoundary userServiceApp) {
         this.userServiceApp = userServiceApp;
     }
@@ -34,6 +36,11 @@ public class UserController {
     @PutMapping
     public User updateUser(@RequestBody User user) {
         return userServiceApp.updateUser(user);
+    }
+
+    @GetMapping("/isRegistered/{email}")
+    public boolean isRegistered(@PathVariable(name = "email") String email) {
+        return userServiceApp.isRegistered(email);
     }
 
 }

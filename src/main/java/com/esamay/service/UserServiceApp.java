@@ -41,6 +41,17 @@ public class UserServiceApp implements UserServiceBoundary {
         return mapUsers(userRepository.findAll());
     }
 
+    @Override
+    public boolean isRegistered(String email) {
+        com.esamay.entity.User user = this.userRepository.findByEmail(email);
+        return user != null;
+    }
+
+    @Override
+    public User validateUser(String email, String password) {
+        return mapEntitytoUser(this.userRepository.findByEmailAndPassword(email, password));
+    }
+
     private com.esamay.entity.User mapUsertoEntity(User user) {
         ModelMapper mapper = new ModelMapper();
         Type type = new TypeToken<com.esamay.entity.User>() {
@@ -57,6 +68,7 @@ public class UserServiceApp implements UserServiceBoundary {
         }.getType();
         return mapper.map(user, type);
     }
+
     private List<User> mapUsers(List<com.esamay.entity.User> users) {
         ModelMapper mapper = new ModelMapper();
         Type listType = new TypeToken<ArrayList<User>>() {

@@ -9,4 +9,7 @@ public interface UserServiceBoundary {
     User updateUser(User user);
     User getUser(String userId);
     List<User> getUsers();
+    boolean isRegistered(String email);
+
+    User validateUser(String email, String password);
 }
