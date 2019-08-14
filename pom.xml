@@ -117,7 +117,7 @@
                     <port>8181</port>
                     <address>0.0.0.0</address>
                     <project>microapi-esamay</project>
-                    <version>1.0.1</version>
+                    <version>11</version>
                 </configuration>
             </plugin>
         </plugins>
