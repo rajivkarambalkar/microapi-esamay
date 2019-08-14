@@ -116,6 +116,7 @@
 					<enableJarClasses>false</enableJarClasses>
 					<port>8181</port>
 					<address>0.0.0.0</address>
+				<project>microapi-esamay</project>
 				</configuration>
 			</plugin>
 		</plugins>
