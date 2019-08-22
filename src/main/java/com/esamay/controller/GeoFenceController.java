@@ -17,22 +17,22 @@ public class GeoFenceController {
     }
 
     @GetMapping("/{geofenceId}")
-    public GeofenceLocation getUser(@PathVariable(name = "geofenceId") String geofenceId) {
+    public GeofenceLocation getGeoFenceLocation(@PathVariable(name = "geofenceId") String geofenceId) {
         return geoFenceServiceServiceApp.getGeofenceLocation(geofenceId);
     }
 
     @GetMapping("/all")
-    public List<GeofenceLocation> getUsers() {
+    public List<GeofenceLocation> getGeoFenceLocations() {
         return geoFenceServiceServiceApp.getGeofenceLocations();
     }
 
     @PostMapping
-    public GeofenceLocation addUser(@RequestBody GeofenceLocation geofenceLocation) {
+    public GeofenceLocation addGeoFenceLocation(@RequestBody GeofenceLocation geofenceLocation) {
         return geoFenceServiceServiceApp.saveGeofenceLocation(geofenceLocation);
     }
 
     @PutMapping
-    public GeofenceLocation updateUser(@RequestBody GeofenceLocation geofenceLocation) {
+    public GeofenceLocation updateGeoFenceLocation(@RequestBody GeofenceLocation geofenceLocation) {
         return geoFenceServiceServiceApp.updateGeofenceLocation(geofenceLocation);
     }
 

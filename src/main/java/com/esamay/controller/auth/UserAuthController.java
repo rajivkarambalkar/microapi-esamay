@@ -2,10 +2,7 @@ package com.esamay.controller.auth;
 
 import com.esamay.domain.User;
 import com.esamay.service.UserServiceBoundary;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -21,5 +18,16 @@ public class UserAuthController {
     public User authenticateUser(@RequestBody UserLogin user) {
         return userServiceApp.validateUser(user.getEmail(), user.getPassword());
     }
+
+    @PostMapping
+    public User resetPassword(@RequestBody UserLogin user) {
+        return userServiceApp.updatePassword(user.getEmail(), user.getPassword());
+    }
+
+    @GetMapping
+    public String retrievePassword(@PathVariable(name = "email") String email) {
+        return userServiceApp.retrievePassword(email);
+    }
+
 }
 

@@ -19,7 +19,7 @@ public class TimeSheetController {
     }
 
     @GetMapping("/{timeSheetId}")
-    public TimeSheet getUser(@PathVariable(name = "timeSheetId") String timeSheetId) {
+    public TimeSheet getTimeSheet(@PathVariable(name = "timeSheetId") String timeSheetId) {
         return timeSheetApp.getTimeSheet(timeSheetId);
     }
 
@@ -29,17 +29,17 @@ public class TimeSheetController {
     }
 
     @GetMapping("/all/{userId}")
-    public List<TimeSheet> getTimeSheetsByUser(@PathVariable(name = "userId")  String userId) {
+    public List<TimeSheet> getTimeSheetsByUser(@PathVariable(name = "userId") String userId) {
         return timeSheetApp.getTimeSheetsByUserId(userId);
     }
 
     @PostMapping
-    public TimeSheet addUser(@RequestBody TimeSheet timeSheet) {
+    public TimeSheet addTimeSheet(@RequestBody TimeSheet timeSheet) {
         return timeSheetApp.saveTimeSheet(timeSheet);
     }
 
     @PutMapping
-    public TimeSheet updateUser(@RequestBody TimeSheet timeSheet) {
+    public TimeSheet updateTimeSheet(@RequestBody TimeSheet timeSheet) {
         return timeSheetApp.updateTimeSheet(timeSheet);
     }
 

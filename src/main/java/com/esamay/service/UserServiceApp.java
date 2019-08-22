@@ -52,6 +52,20 @@ public class UserServiceApp implements UserServiceBoundary {
         return mapEntitytoUser(this.userRepository.findByEmailAndPassword(email, password));
     }
 
+    @Override
+    public User updatePassword(String email, String password) {
+        com.esamay.entity.User user = this.userRepository.findByEmail(email);
+        user.setPassword(password);
+        return mapEntitytoUser(this.userRepository.saveAndFlush(user));
+    }
+
+    @Override
+    public String retrievePassword(String email) {
+        com.esamay.entity.User user = this.userRepository.findByEmail(email);
+        if (user != null) return user.getPassword();
+        else return "";
+    }
+
     private com.esamay.entity.User mapUsertoEntity(User user) {
         ModelMapper mapper = new ModelMapper();
         Type type = new TypeToken<com.esamay.entity.User>() {
