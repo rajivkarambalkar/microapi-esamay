@@ -19,12 +19,12 @@ public class UserAuthController {
         return userServiceApp.validateUser(user.getEmail(), user.getPassword());
     }
 
-    @PostMapping
+    @PostMapping("/reset/password")
     public User resetPassword(@RequestBody UserLogin user) {
         return userServiceApp.updatePassword(user.getEmail(), user.getPassword());
     }
 
-    @GetMapping
+    @GetMapping("/retrieve/password/{email}")
     public String retrievePassword(@PathVariable(name = "email") String email) {
         return userServiceApp.retrievePassword(email);
     }
