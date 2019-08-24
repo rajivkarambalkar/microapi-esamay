@@ -2,6 +2,7 @@ package com.esamay.service;
 
 import com.esamay.domain.User;
 import com.esamay.repository.UserRepository;
+import com.esamay.service.crypto.EncryptionDecryptionBoundary;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +16,24 @@ import java.util.List;
 public class UserServiceApp implements UserServiceBoundary {
 
     private final UserRepository userRepository;
+    private final EncryptionDecryptionBoundary encryptionDecryptionApp;
+
 
     @Autowired
-    public UserServiceApp(UserRepository userRepository) {
+    public UserServiceApp(UserRepository userRepository, EncryptionDecryptionBoundary encryptionDecryptionApp) {
         this.userRepository = userRepository;
+        this.encryptionDecryptionApp = encryptionDecryptionApp;
     }
 
     @Override
     public User saveUser(User user) {
+        user.setPassword(this.encryptionDecryptionApp.encrypt(user.getPassword()));
         return mapEntitytoUser(userRepository.saveAndFlush(mapUsertoEntity(user)));
     }
 
     @Override
     public User updateUser(User user) {
+        user.setPassword(this.encryptionDecryptionApp.encrypt(user.getPassword()));
         return mapEntitytoUser(userRepository.saveAndFlush(mapUsertoEntity(user)));
     }
 
@@ -49,20 +55,20 @@ public class UserServiceApp implements UserServiceBoundary {
 
     @Override
     public User validateUser(String email, String password) {
-        return mapEntitytoUser(this.userRepository.findByEmailAndPassword(email, password));
+        return mapEntitytoUser(this.userRepository.findByEmailAndPassword(email, this.encryptionDecryptionApp.encrypt(password)));
     }
 
     @Override
     public User updatePassword(String email, String password) {
         com.esamay.entity.User user = this.userRepository.findByEmail(email);
-        user.setPassword(password);
+        user.setPassword(this.encryptionDecryptionApp.encrypt(password));
         return mapEntitytoUser(this.userRepository.saveAndFlush(user));
     }
 
     @Override
     public String retrievePassword(String email) {
         com.esamay.entity.User user = this.userRepository.findByEmail(email);
-        if (user != null) return user.getPassword();
+        if (user != null) return this.encryptionDecryptionApp.decrypt(user.getPassword());
         else return "";
     }
 
