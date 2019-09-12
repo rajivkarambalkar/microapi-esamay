@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class TimeSheetApp implements TimeSheetBoundary {
 
     @Override
     public TimeSheet saveTimeSheet(TimeSheet timeSheet) {
+        timeSheet.setTimestamp(new Timestamp(System.currentTimeMillis()));
         timeSheet.setDay(timeSheet.getTimestamp().toLocalDateTime().getDayOfWeek().toString());
         return mapEntitytoTimeSheet(timeSheetRepository.saveAndFlush(mapTimeSheettoEntity(timeSheet)));
     }
