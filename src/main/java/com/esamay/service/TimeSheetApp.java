@@ -9,12 +9,15 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class TimeSheetApp implements TimeSheetBoundary {
 
+    private static final String IST_TIMEZONE = "GMT+05:30";
     private final TimeSheetRepository timeSheetRepository;
 
     @Autowired
@@ -24,7 +27,8 @@ public class TimeSheetApp implements TimeSheetBoundary {
 
     @Override
     public TimeSheet saveTimeSheet(TimeSheet timeSheet) {
-        timeSheet.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of(IST_TIMEZONE));
+        timeSheet.setTimestamp(Timestamp.valueOf(localDateTime));
         timeSheet.setDay(timeSheet.getTimestamp().toLocalDateTime().getDayOfWeek().toString());
         return mapEntitytoTimeSheet(timeSheetRepository.saveAndFlush(mapTimeSheettoEntity(timeSheet)));
     }
